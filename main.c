@@ -1,3 +1,5 @@
+// first attempt at combine backwards, 26/11/21
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -42,19 +44,21 @@ const char * combine_backwards(char sentence1[], char sentence2[]){
   // lengths of input sentences are stored to allocate enough memory without having an excess amount
   int sentence1_length = strlen(sentence1);
   int sentence2_length = strlen(sentence2);
+  
   // shortest and longest are used when deciding how the lists will be mearged as the longer list will have it's excess added on at the end. 
   int shortest, longest;
   // counters have been used to track positions in arrays, this was probably possible with for-loops but decided this was the easier route for me. 
   int counter_1 = 0;
   int counter_2 = 0;
   int counter_3, counter_4;
-  // 
-  char *bigger_sentence;
+  // bigger_sentence is used to make it a big more obvious where the sentences have stopped merging and show where the unmerged part is being added. 
+  char *bigger_sentence = malloc((sentence1_length+sentence2_length+1)*sizeof(char)); 
+  // this is storage allocated for the reversed result of the merged sentences 
   char *reversed_combined= malloc((sentence1_length+sentence2_length+1)*sizeof(char)); 
 
   // printf("\nlengths %d %d", sentence1_length, sentence2_length);
   char *combined_lst = malloc((sentence1_length+sentence2_length+1)*sizeof(char));
-
+  // this is where i've determined whih sentence is longer and have set their lengths to shortest and longestffd this information is used to work out when to stop merging the lists as the shorter one will run out of characters to merge. 
   if (sentence1_length < sentence2_length) {
     shortest = sentence1_length;
     longest = sentence2_length;
@@ -66,40 +70,46 @@ const char * combine_backwards(char sentence1[], char sentence2[]){
     longest = sentence1_length;
     bigger_sentence = sentence1;
   }
-  // printf("\nshorter = %d", shortest);
   
 
-
+  // since the merged part is going to be twice that of the shortest sentence the for - loop goes from 0 to shortest*2 
   for (int i = 0; i<shortest*2; i++ ){
+    // this if statement lets me alternate between lists so that each list will store 1 item after the other until. 
     if (i % 2 == 0){
+      // stores the letters from sentence_1 in the combined_lst
     combined_lst[i] = sentence1[counter_1];
+    // counter is used to remember position in the array
     counter_1++;
     }
     else {
+      // stores letters from sentence_2 in the combined_lst 
     combined_lst[i] = sentence2[counter_2];
     counter_2++;
     }
   }
+  // in the previous statements the two sentences were combined up until the shortest length they share, 
+  // counter_3 is going to be used to add items to the next index from where they stopped merging.  
   counter_3 = shortest*2;
   for(int i = shortest; i < longest; i++){
-    // printf("\n%d.   %c", i, bigger_sentence[i]);
+    // here the last part of the bigger_sentence is added onto the end of the combined_lst.
     combined_lst[counter_3] = bigger_sentence[i];
     counter_3++; 
   }
 
   int combined_length = strlen(combined_lst);
-  // printf("\nlength of combined_lst = %d", combined_length);
-  // printf("\n%s\n%d", combined_lst, combined_length);
-  // printf("\ncombined_lst = %s\n", combined_lst);
+  // counter is used to keep track of array position.
   counter_4 = 0; 
+  // for loop is used to store the combined_lst in reversed order to the reversed_combined storage. 
   for (int i = combined_length-1; i>=0 ;i--){
     // printf("\n%c", combined_lst[i]);
     reversed_combined[counter_4] = combined_lst[i];
     counter_4++;
 
   }
-  // printf("\nreversed_combined = %s", reversed_combined);
+  
+  // memory is freed. 
   free(combined_lst);
+
   char *final_result = reversed_combined; 
   return final_result; 
 }

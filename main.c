@@ -3,8 +3,6 @@
    version: 1.1
 */  
 
-
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -34,7 +32,6 @@ int main(void) {
   return 0;
 }
 
-
 const char * merge_reverse(char input_sentence_1[],char input_sentence_2[]){
   // declare variables
   // smaller_lst & longer_lst are used to determine which list is bigger, 
@@ -60,7 +57,6 @@ const char * merge_reverse(char input_sentence_1[],char input_sentence_2[]){
     longer_lst = length_sentence_2;
     strcpy(biggest_lst, input_sentence_1);
   }
-
   //counters to through the input sentences 1 index at a time. 
   int sentence_1_counter = 0;
   int sentence_2_counter = 0;

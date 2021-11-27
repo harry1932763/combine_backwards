@@ -3,12 +3,12 @@
    version: 1.1
 */  
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <stdio.h> /*printf(), scanf()*/
+#include <string.h> /*strlen(), strcpy()*/
+#include <stdlib.h> /*malloc(), free()*/
 
-const char * combine(char input_sentence_1[],char input_sentence_2[]); 
-const char * reversed(char string_array[]); 
+const char * combine(char input_sentence_1[],char input_sentence_2[]); /*function proto-type */
+const char * reversed(char string_array[]); /*function proto-type */
 
 int main(void) {
   // varibles to store user inputted sentences
